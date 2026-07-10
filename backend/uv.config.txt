@@ -1,0 +1,43 @@
+Steps to run a FastAPI server with uv (src/ layout, feature-based)
+
+1- start a project and select the python version
+uv init --python 3.12
+
+2- add dependencies, like:
+uv add "fastapi[standard]"
+
+3- lay out the folders like this (instead of a flat main.py at the root):
+
+backend/
+  pyproject.toml
+  src/
+    main.py                  <- FastAPI app + lifespan lives here now, not at the root
+    api/
+      health/
+        healthcheck.py
+      v1/
+        api_v1.py             <- aggregates all feature routers
+        <feature>/
+          <feature>.py         <- router for this feature
+    features/
+      <feature>/
+        dependencies.py        <- FastAPI Depends() wiring (get_<feature>_service)
+        repositories/
+          <feature>_model.py    <- SQLAlchemy model
+          <feature>_repository.py
+        services/
+          <feature>_service.py
+        schemas/
+          <feature>_schemas.py  <- pydantic request/response models
+    providers/
+      db/
+        db.py                  <- engine/session/Base
+        models_registry.py     <- auto-imports every *_model.py so create_all sees them
+    shared/
+      config/
+        config.py               <- env-driven settings (DATABASE_URL, etc.)
+      enums/
+      schemas/                  <- schemas shared across features
+
+4- run the server (must run from backend/, since imports are "src.xxx")
+uv run fastapi dev src/main.py
