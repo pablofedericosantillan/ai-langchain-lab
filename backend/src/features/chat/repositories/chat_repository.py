@@ -16,3 +16,11 @@ class ChatRepository:
 
     def get(self, chat_id: int) -> Chat | None:
         return self.db.get(Chat, chat_id)
+
+    def list(self, limit: int = 50) -> list[Chat]:
+        return (
+            self.db.query(Chat)
+            .order_by(Chat.created_at.desc())
+            .limit(limit)
+            .all()
+        )

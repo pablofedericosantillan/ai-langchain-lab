@@ -10,9 +10,9 @@ const Container = ({
 }>) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex max-md:flex-col bg-main-background max-md:px-4 h-screen max-md:h-full">
+      <div className="flex h-screen bg-(--bg) text-(--text) max-md:h-full max-md:flex-col">
         <Sidebar />
-          <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex min-w-0 flex-1 flex-col">{children}</main>
       </div>
     </QueryClientProvider>
   );

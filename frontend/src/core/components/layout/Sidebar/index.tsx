@@ -4,7 +4,7 @@ import SidebarContent from "./SidebarContent";
 const Sidebar = () => {
 
   return (
-    <div className="max-md:hidden p-4 h-full flex-shrink-0">
+    <div className="h-full shrink-0 max-md:hidden">
       <SidebarContent />
     </div>
   );

@@ -10,3 +10,6 @@ class ChatService:
 
     def get_chat(self, chat_id: int) -> Chat | None:
         return self.chat_repository.get(chat_id)
+
+    def list_chats(self) -> list[Chat]:
+        return self.chat_repository.list()

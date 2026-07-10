@@ -10,6 +10,13 @@ from src.features.message.services import MessageService
 router = APIRouter()
 
 
+@router.get("/", response_model=list[ChatBase])
+def list_chats(
+    chat_service: ChatService = Depends(get_chat_service),
+):
+    return chat_service.list_chats()
+
+
 @router.post("/", response_model=ChatBase, status_code=status.HTTP_201_CREATED)
 def create_chat(
     chat_data: ChatCreate,
